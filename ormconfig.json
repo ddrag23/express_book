@@ -1,0 +1,19 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": "3306",
+  "username": "root",
+  "password": "1",
+  "database": "express_book",
+  "synchronize": true,
+  "logging": false,
+  "dropSchema": false,
+  "migrationsRun": true,
+  "entities": ["src/entities/*.ts", "build/src/entities/*.js"],
+  "migrations": ["src/migrations/*.ts"],
+  "subscribers": ["src/subscriber/*.ts"],
+  "cli": {
+    "migrationsDir": "src/migrations",
+    "entitiesDir": "src/entities"
+  }
+}

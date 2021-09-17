@@ -2,9 +2,8 @@ import express, { Application } from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 import morgan from 'morgan'
-import dotnv from 'dotenv'
-
-dotnv.config()
+import BookController from './controller/BookController'
+import { createConnection } from 'typeorm'
 
 export default class Server {
   protected app: Application
@@ -12,6 +11,7 @@ export default class Server {
   constructor(port: number) {
     this.app = express()
     this.port = port
+
     this.plugins()
     this.routes()
   }
@@ -22,7 +22,11 @@ export default class Server {
     this.app.use(morgan('dev'))
   }
 
-  protected routes() {}
+  protected async routes() {
+    await createConnection()
+    this.app.get('/book', await BookController.index)
+    // this.app.use(router)
+  }
 
   public runServer() {
     this.app.listen(this.port, () => {
