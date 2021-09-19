@@ -1,15 +1,15 @@
 import { Request, Response } from 'express'
-import { Book } from '../entities/Book'
-import { getConnection } from 'typeorm'
-
+import BookService from '../services/BookService'
 class BookController {
-  //   protected repository = getRepository(Book)
-  // constructor(parameters) {
+  protected service: BookService
+  constructor() {
+    this.service = new BookService()
+  }
 
-  // }
-
-  async index(req: Request, res: Response) {
-    return res.send({ data: await getConnection().getRepository(Book).find() })
+  public async index(req: Request, res: Response) {
+    const data = await this.service.index()
+    console.log(data)
+    res.send(data).json()
   }
 }
 

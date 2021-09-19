@@ -7,16 +7,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "start": "ts-node ./src/index.ts",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+    "start": "ts-node ./src/index.ts"
   },
   "dependencies": {
+    "@prisma/client": "^3.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
-    "mysql": "^2.18.1",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.37"
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
@@ -27,6 +25,7 @@
     "dotenv": "^10.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
+    "prisma": "^3.0.2",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   }
