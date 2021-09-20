@@ -3,6 +3,7 @@ CREATE TABLE `users` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(191) NOT NULL,
     `username` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
     `notelp` VARCHAR(20) NOT NULL,
     `role` ENUM('admin', 'author', 'user') NOT NULL DEFAULT 'user',
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

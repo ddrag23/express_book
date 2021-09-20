@@ -15,6 +15,7 @@ model Users {
   id        Int      @id @default(autoincrement())
   email   String
   username String @unique
+  password String @db.VarChar(255)
   notelp  String @db.VarChar(20)
   role  Role @default(user)
   created_at DateTime @default(now())  
