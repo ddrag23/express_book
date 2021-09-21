@@ -1,6 +1,5 @@
 import { Prisma } from '.prisma/client'
-import { hashSync } from 'bcrypt'
-// import { hash } from '../pkg/hash'
+import { hash } from '../pkg/hash'
 import UserRepository from '../repository/user.repository'
 
 class UserService {
@@ -22,9 +21,11 @@ class UserService {
   ): Promise<Object | undefined> {
     try {
       const { password } = data
-      const hashPassword = hashSync(password, 10)
-      data.password = hashPassword
-      const storeToRepository = await this.repository.save(data)
+      const hashPassword = await hash(password)
+      const storeToRepository = await this.repository.save({
+        ...data,
+        password: hashPassword,
+      })
       const response = {
         message: 'Data berhasil dimasukkan',
         data: storeToRepository,

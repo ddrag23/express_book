@@ -1,7 +1,7 @@
-import { Prisma, PrismaClient } from '.prisma/client'
+import { Prisma, PrismaClient, Users } from '.prisma/client'
 
 class UserRepository extends PrismaClient {
-  public async findAll() {
+  public async findAll(): Promise<Users[]> {
     try {
       return await this.users.findMany()
     } catch (error) {
@@ -12,7 +12,7 @@ class UserRepository extends PrismaClient {
     }
   }
 
-  public async save(user: Prisma.UsersCreateInput): Promise<any> {
+  public async save(user: Prisma.UsersCreateInput): Promise<Users> {
     try {
       const store = await this.users.create({ data: user })
       return store
