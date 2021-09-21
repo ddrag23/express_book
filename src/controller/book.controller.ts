@@ -8,8 +8,8 @@ class BookController {
 
   public index = async (req: Request, res: Response) => {
     // const service = new BookService()
-    console.log(await this.service.index())
-    res.send(await this.service.index()).json()
+    console.log(await this.service.all())
+    res.send(await this.service.all()).json()
   }
 }
 

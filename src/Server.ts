@@ -2,7 +2,8 @@ import express, { Application, urlencoded, json } from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 import morgan from 'morgan'
-import router from './routes/book'
+import bookRouter from './routes/book'
+import userRouter from './routes/user'
 
 export default class Server {
   protected app: Application
@@ -23,7 +24,8 @@ export default class Server {
   }
 
   protected routes(): void {
-    this.app.use('/book', router)
+    this.app.use('/book', bookRouter)
+    this.app.use('/user', userRouter)
     // this.app.use(router)
   }
 
