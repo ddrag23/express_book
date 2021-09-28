@@ -1,0 +1,39 @@
+version : '3'
+
+services : 
+  db:
+    image: mariadb:latest
+    container_name : db_express_book
+    ports :
+      - 3306:3306
+    environment :
+      MYSQL_ROOT_PASSWORD : 1
+      MYSQL_USER : aladin
+      MYSQL_PASSWORD : 1
+    volumes :
+      - mariadb_data:/var/lib/mysql
+    networks :
+      database :
+        aliases:
+          - "127.0.0.1"
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: admin_express_book
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - 81:80
+    volumes:
+      - ./local/sessions:/sessions
+    networks:
+      - database
+    depends_on : 
+      - db
+
+volumes :
+  mariadb_data : {}
+networks :
+  database:
+    driver : bridge

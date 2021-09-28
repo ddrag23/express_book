@@ -18,7 +18,34 @@ class UserRepository extends PrismaClient {
       return store
     } catch (error) {
       throw new Error(error as string)
+    } finally {
+      await this.$disconnect
     }
+  }
+
+  public async find(id: number): Promise<Users> {
+    const user = await this.users.findUnique({
+      where: {
+        id,
+      },
+      rejectOnNotFound: true,
+    })
+    return user
+  }
+
+  public async findUsername(username: string): Promise<Users> {
+    const user = await this.users.findUnique({
+      where: {
+        username,
+      },
+      rejectOnNotFound: true,
+    })
+    return user
+  }
+
+  public async destroy(id: number): Promise<Users | Prisma.RejectOnNotFound> {
+    const deleted = await this.users.delete({ where: { id } })
+    return deleted
   }
 }
 

@@ -1,4 +1,4 @@
-import { Prisma } from '.prisma/client'
+import { Prisma, Users } from '.prisma/client'
 import { hash } from '../pkg/hash'
 import UserRepository from '../repository/user.repository'
 
@@ -7,10 +7,10 @@ class UserService {
   constructor() {
     this.repository = new UserRepository()
   }
-  public async all() {
+  public async all(): Promise<Array<Users>> {
     try {
-      const books = await this.repository.findAll()
-      return books
+      const users = await this.repository.findAll()
+      return users
     } catch (err) {
       throw new Error(err as string)
     }
@@ -34,6 +34,18 @@ class UserService {
     } catch (error) {
       throw new Error(error as string)
     }
+  }
+
+  public async handleFind(id: number): Promise<Users> {
+    const user = await this.repository.find(id)
+    return user
+  }
+
+  public async handleDelete(
+    id: number,
+  ): Promise<Users | Prisma.RejectOnNotFound> {
+    const deleteUser = await this.repository.destroy(id)
+    return deleteUser
   }
 }
 

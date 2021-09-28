@@ -4,6 +4,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import bookRouter from './routes/book'
 import userRouter from './routes/user'
+import authRouter from './routes/auth'
 
 export default class Server {
   protected app: Application
@@ -26,7 +27,10 @@ export default class Server {
   protected routes(): void {
     this.app.use('/book', bookRouter)
     this.app.use('/user', userRouter)
-    // this.app.use(router)
+    this.app.use('/auth', authRouter)
+    this.app.use('*', (_, res: express.Response) => {
+      res.status(404).send('Page Not Found')
+    })
   }
 
   public runServer() {
