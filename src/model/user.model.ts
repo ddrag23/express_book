@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient, Users } from '.prisma/client'
 
-class UserRepository extends PrismaClient {
+class UserModel extends PrismaClient {
   public async findAll(): Promise<Users[]> {
     try {
       return await this.users.findMany()
@@ -49,4 +49,4 @@ class UserRepository extends PrismaClient {
   }
 }
 
-export default UserRepository
+export default UserModel

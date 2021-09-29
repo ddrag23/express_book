@@ -1,15 +1,15 @@
 import { Prisma, Users } from '.prisma/client'
 import { hash } from '../pkg/hash'
-import UserRepository from '../repository/user.repository'
+import UserModel from '../model/user.model'
 
 class UserService {
-  protected repository: UserRepository
+  protected model: UserModel
   constructor() {
-    this.repository = new UserRepository()
+    this.model = new UserModel()
   }
   public async all(): Promise<Array<Users>> {
     try {
-      const users = await this.repository.findAll()
+      const users = await this.model.findAll()
       return users
     } catch (err) {
       throw new Error(err as string)
@@ -22,13 +22,13 @@ class UserService {
     try {
       const { password } = data
       const hashPassword = await hash(password)
-      const storeToRepository = await this.repository.save({
+      const storeTomodel = await this.model.save({
         ...data,
         password: hashPassword,
       })
       const response = {
         message: 'Data berhasil dimasukkan',
-        data: storeToRepository,
+        data: storeTomodel,
       }
       return response
     } catch (error) {
@@ -37,14 +37,14 @@ class UserService {
   }
 
   public async handleFind(id: number): Promise<Users> {
-    const user = await this.repository.find(id)
+    const user = await this.model.find(id)
     return user
   }
 
   public async handleDelete(
     id: number,
   ): Promise<Users | Prisma.RejectOnNotFound> {
-    const deleteUser = await this.repository.destroy(id)
+    const deleteUser = await this.model.destroy(id)
     return deleteUser
   }
 }

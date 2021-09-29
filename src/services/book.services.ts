@@ -1,9 +1,9 @@
-import BookRepository from '../repository/book.repository'
+import BookModel from '../model/book.model'
 
 class BookService {
-  protected repository: BookRepository
+  protected repository: BookModel
   constructor() {
-    this.repository = new BookRepository()
+    this.repository = new BookModel()
   }
   public async all() {
     try {
