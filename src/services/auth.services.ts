@@ -1,6 +1,6 @@
 import { createAccessToken, createRefreshToken } from '../pkg/jwt'
 import { compare } from '../pkg/hash'
-import UserRepository from '../repository/user.repository'
+import UserRepository from '../model/user.model'
 
 export default class AuthService {
   protected repository: UserRepository

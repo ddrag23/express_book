@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import bookRouter from './routes/book'
 import userRouter from './routes/user'
 import authRouter from './routes/auth'
+import categoryRouter from './routes/category'
 
 export default class Server {
   protected app: Application
@@ -28,6 +29,7 @@ export default class Server {
     this.app.use('/book', bookRouter)
     this.app.use('/user', userRouter)
     this.app.use('/auth', authRouter)
+    this.app.use('/kategori', categoryRouter)
     this.app.use('*', (_, res: express.Response) => {
       res.status(404).send('Page Not Found')
     })
