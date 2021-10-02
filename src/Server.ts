@@ -21,7 +21,7 @@ export default class Server {
     this.app.use(helmet())
     this.app.use(cors())
     this.app.use(morgan('dev'))
-    this.app.use(urlencoded({ extended: true }))
+    this.app.use(urlencoded({ extended: false }))
     this.app.use(json())
   }
 
