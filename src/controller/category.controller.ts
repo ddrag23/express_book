@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import CategoryService from '../services/category.services'
+import Joi from 'joi'
 class UserController {
   public service: CategoryService
   constructor() {
@@ -12,7 +13,12 @@ class UserController {
   }
 
   public store = async (req: Request, res: Response): Promise<void> => {
+    const validation = Joi.object({
+      name_category: Joi.string().min(5).required(),
+    })
     try {
+      const { id, ...body } = req.body
+      await validation.validateAsync(body)
       const store = await this.service.store(req.body as Record<string, string>)
       res.send(store)
     } catch (error) {
