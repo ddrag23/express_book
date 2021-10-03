@@ -10,16 +10,17 @@ export default class AuthService {
 
   public async handleLogin(username: string, password: string) {
     const user = await this.repository.findUsername(username)
-    if (!user) {
-      throw new Error('Username yang anda masukkan salah')
-    }
     const comparePassword = await compare(password, user.password)
     if (!comparePassword) {
-      throw new Error('Password yang anda masukkan salah')
+      return {
+        status: false,
+        message: 'Password yang anda masukkan salah',
+      }
     }
     const refreshToken = createRefreshToken({ id: String(user.id) })
     const accessToken = createAccessToken({ id: String(user.id) })
     return {
+      status: true,
       data: {
         accessToken,
         refreshToken,

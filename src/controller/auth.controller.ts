@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import Joi from 'joi'
 import {
   verifyRefreshToken,
   createRefreshToken,
@@ -14,15 +15,28 @@ class AuthController {
   }
 
   public login = async (req: Request, res: Response) => {
-    const { username, password } = req.body
-    const login = await this.service.handleLogin(username, password)
-    res.cookie('_tkn', login.data.refreshToken, {
-      httpOnly: true,
+    const validator = Joi.object({
+      username: Joi.string().min(3).required(),
+      password: Joi.string().min(3).required(),
     })
-    res.send({
-      message: 'Berhasil login',
-      token: login.data.accessToken,
-    })
+    try {
+      await validator.validateAsync(req.body)
+      const { username, password } = req.body
+      const login = await this.service.handleLogin(username, password)
+      if (!login.status) {
+        res.send(login)
+        return
+      }
+      res.cookie('_tkn', login.data?.refreshToken, {
+        httpOnly: true,
+      })
+      res.send({
+        message: 'Berhasil login',
+        token: login.data?.accessToken,
+      })
+    } catch (error) {
+      res.status(res.statusCode).json(error)
+    }
   }
 
   public refreshToken = async (req: Request, res: Response) => {

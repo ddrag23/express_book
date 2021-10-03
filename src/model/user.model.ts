@@ -1,9 +1,12 @@
 import { Prisma, PrismaClient, Users } from '.prisma/client'
 
 class UserModel extends PrismaClient {
-  public async findAll(): Promise<Users[]> {
+  public async findAll(limit: number, offset: number): Promise<Users[]> {
     try {
-      return await this.users.findMany()
+      return await this.users.findMany({
+        take: limit,
+        skip: offset,
+      })
     } catch (error) {
       console.log(error)
       throw new Error('Internal Server Error')

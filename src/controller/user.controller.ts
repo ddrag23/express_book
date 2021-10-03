@@ -7,8 +7,8 @@ class UserController {
   }
 
   public index = async (req: Request, res: Response) => {
-    console.log(await this.service.all())
-    res.send(await this.service.all()).json()
+    const { limit, offset } = req.query as Record<string, string>
+    res.send(await this.service.all(+limit, +offset)).json()
   }
 
   public store = async (req: Request, res: Response): Promise<void> => {
@@ -16,7 +16,6 @@ class UserController {
       const store = await this.service.store(req.body)
       res.send(store)
     } catch (error) {
-      console.log(error)
       res.send({
         message: 'Data gagal dimasukkan',
         data: error,

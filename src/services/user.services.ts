@@ -7,9 +7,9 @@ class UserService {
   constructor() {
     this.model = new UserModel()
   }
-  public async all(): Promise<Array<Users>> {
+  public async all(limit: number, offset: number): Promise<Array<Users>> {
     try {
-      const users = await this.model.findAll()
+      const users = await this.model.findAll(limit, offset)
       return users
     } catch (err) {
       throw new Error(err as string)
